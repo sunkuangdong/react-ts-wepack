@@ -7,7 +7,7 @@ const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 const smp = new SpeedMeasurePlugin();
 
 const webpackConfig = {
-  entry: "./src/main.tsx",
+  entry: "./index.tsx",
   mode: "development",
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -20,12 +20,11 @@ const webpackConfig = {
   module: {
     rules: [
       {
-        test: /\.(sass|scss|less|css)$/,
+        test: /\.(sass|scss|css)$/,
         use: [
           { loader: "style-loader" },
           { loader: "css-loader" },
           { loader: "sass-loader" },
-          // { loader: "less-loader" },
         ],
         exclude: ["/node_modules"],
       },
