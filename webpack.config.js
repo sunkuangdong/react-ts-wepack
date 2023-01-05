@@ -4,6 +4,9 @@ const BundleAnalyzerPlugin =
   require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
+// css
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 const smp = new SpeedMeasurePlugin();
 
 const webpackConfig = {
@@ -17,10 +20,18 @@ const webpackConfig = {
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".json"],
   },
+  performance: {
+    hints: false,
+  },
   module: {
     rules: [
       {
-        test: /\.(sass|scss|css)$/,
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+        exclude: ["/node_modules"],
+      },
+      {
+        test: /\.s[ac]ss$/,
         use: [
           { loader: "style-loader" },
           { loader: "css-loader" },
@@ -40,6 +51,9 @@ const webpackConfig = {
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/[name].bundle.[hash].css",
+    }),
     new BundleAnalyzerPlugin(),
     new htmlWebpackPlugin({
       title: "react web",
